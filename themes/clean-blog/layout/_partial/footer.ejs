@@ -73,8 +73,11 @@
                     <% } %>
                 </ul>
                 <ul class="list-inline text-center">
+                    <% if (config.author) {%>
+                        <p ><%- config.author%></p>
+                    <% } %>
                     <% if (theme.mailto) { %>
-                        <p class="">Email: <%- theme.mailto%></p>
+                        <p >Email: <%- theme.mailto%></p>
                     <% } %>
                 </ul>
                 <p class="copyright text-muted">Copyright &copy; Jun 2016</p>
