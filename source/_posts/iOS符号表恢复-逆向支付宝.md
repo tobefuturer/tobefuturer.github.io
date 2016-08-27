@@ -257,8 +257,7 @@ struct __block_impl {
 
 整理上面的思路，我们发现搜索过程依赖于IDA提供各种引用信息，而IDA是提供了编程接口的，可以利用这些接口来提取引用信息。
 
-IDA提供的是Python的SDK，最后完成的脚本也放在Github上了，链接:
-https://github.com/tobefuturer/restore-symbol/blob/master/search_oc_block/ida_search_block.py
+IDA提供的是Python的SDK，最后完成的脚本也放在仓库里[search_oc_block/ida_search_block.py](https://github.com/tobefuturer/restore-symbol/blob/master/search_oc_block/ida_search_block.py)。
 
 ## 提取block符号表
 
