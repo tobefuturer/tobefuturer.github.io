@@ -258,6 +258,6 @@ iPhone 6Plus 、iOS 9.3.1 、arm64
 # 参考链接&致谢
 
 1. dyld的源码：https://opensource.apple.com/source/dyld/
-2. 感谢狗哥逆向群里 @Ouroboros， @Misty，@张总 三位大神的激烈讨论，还有帮我砸支付宝壳的 @{}
+2. 感谢狗哥的iOS逆向群里 @Ouroboros， @Misty，@张总 三位大神的激烈讨论，还有帮我砸支付宝壳的 @{}
 3. 顺便推广下iOS逆向的论坛 [http://iosre.com/](http://iosre.com/)
 
