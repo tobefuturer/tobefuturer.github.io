@@ -172,7 +172,7 @@ cd ${FULL_PRODUCT_NAME}
 
 4.怎么调用动态库里的方法呢？
 
-为方便大家尝试，这里选两个比较简单的函数调用演示给大家。
+为方便大家尝试，这里选两个分析起来比较简单的函数调用演示给大家。
 
 一个是OC的方法 +[aluSecurity rsaEncryptText:pubKey:], 可以直接用oc运行时调用。
 
@@ -253,7 +253,7 @@ iPhone 6Plus 、iOS 9.3.1 、arm64
 支付宝9.9.3
 
 
-使用过程中，如果遇到问题可以去github上提issue，或者email(tobefuturer@gmail.com)，提问时请描述清楚遇到的问题和已经尝试过的解决方法。
+实际使用过程中，可能会遇到各种奇葩问题，可以去github上提issue，或者email(tobefuturer@gmail.com)，提问时请描述清楚遇到的问题和已经尝试过的解决方法。
 
 # 参考链接&致谢
 
