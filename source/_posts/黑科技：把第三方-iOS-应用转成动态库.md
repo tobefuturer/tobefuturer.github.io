@@ -1,6 +1,6 @@
 ---
-title: Convert iOS App To Dynamic Library
-date: 2016-10-06 12:05:30
+title: 黑科技：把第三方 iOS 应用转成动态库
+date: 2016-10-08 21:51:10
 tags:
 ---
 
@@ -35,7 +35,7 @@ tags:
 我们要把应用转成动态库，首先要知道这两者之前有什么相同与不同，有相同的才存在转换的可能，而不同之处就是我们要重点关注的了。
 
 ### 相同点：
-![](Convert-iOS-App-To-Dynamic-Library/app_dylib_header_common.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/app_dylib_header_common.jpg)
 
 可执行文件和动态库都是标准的 Mach-O 文件格式，两者的文件头部结构非常类似，特别是其中的代码段（TEXT）,和数据段（DATA）结构完全一致，这也是后面转换工作的基础。
 
@@ -45,13 +45,13 @@ tags:
 
 1. 头部的文件类型
 一个是 MH_EXECUTE 可执行文件， 一个是 MH_DYLIB 动态库， 还有各种头部的Flags，要特别留意下可执行文件中Flags部分的 MH_PIE 标志，后面再详细说。
-![](Convert-iOS-App-To-Dynamic-Library/app_dylib_difference_header.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/app_dylib_difference_header.jpg)
 
 2. 动态库文件中多一个类型为 LC_ID_DYLIB  的 Load Command, 作用是动态库的标识符，一般为文件路径。路径可以随便填，但是这部分必须要有，是codesign的要求。
-![](Convert-iOS-App-To-Dynamic-Library/app_dylib_difference_dylib_command.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/app_dylib_difference_dylib_command.jpg)
 
 3. 可执行文件会多出一个 PAGEZERO段，动态库中没有。这个段开始地址为0（NULL指针指向的位置），是一个不可读、不可写、不可执行的空间，能够在空指针访问时抛出异常。这个段的大小，32位上是0x4000，64位上是4G。这个段的处理也是转换工作的重点之一，之前有人尝试转换，不成功就是因为没有处理好 PAGEZERO.
-![](Convert-iOS-App-To-Dynamic-Library/app_dylib_difference_pagezero.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/app_dylib_difference_pagezero.jpg)
 
 
 # 实现细节
@@ -83,11 +83,11 @@ tags:
 
 修改前：
 
-![](Convert-iOS-App-To-Dynamic-Library/address_space_before_modify.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/address_space_before_modify.jpg)
 
 修改后：
 
-![](Convert-iOS-App-To-Dynamic-Library/address_space_after_modify.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/address_space_after_modify.jpg)
 
 #### 2. 对动态库进行rebase操作
 
@@ -99,25 +99,25 @@ tags:
 
 相关的信息储存在 Mach-O 文件的 LINKEDIT 段中, 并由 LC_DYLD_INFO_ONLY 指定 rebase info 在文件中的偏移量
 
-![](Convert-iOS-App-To-Dynamic-Library/rebase_offset.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/rebase_offset.jpg)
 
 详细的rebase信息:
 
-![](Convert-iOS-App-To-Dynamic-Library/rebase_info.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/rebase_info.jpg)
 
 红框里那些Pointer的意思是说，在内存地址为 0x367C698 的地方有一个指针，这个指针需要进行rebase操作, 操作的内容就是和前面调整地址空间一样，每个指针减去 0xFFFFC000。
 
-![](Convert-iOS-App-To-Dynamic-Library/rebase_subtraction.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/rebase_subtraction.jpg)
 
 #### 3. 为什么不能直接去掉PAGEZERO这个段
 
 这个原因要涉及到文件中rebase信息的储存格式，上面的图中，可以看出rebase要处理的是一个个指针，但是实际上这些信息在文件中并不是以指针数组的形式存在，而是以一连串rebase opcode的形式存在，上面看到的一个个指针其实是 Mach O View 这个软件帮我们将opcode整理得到的。
 
-![](Convert-iOS-App-To-Dynamic-Library/rebase_opcode.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/rebase_opcode.jpg)
 
 这些opcode中有一种操作比较关键，REBASE_OPCODE_SET_SEGMENT_AND_OFFSET_ULEB。
 
-![](Convert-iOS-App-To-Dynamic-Library/rebase_opcode_set_segment.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/rebase_opcode_set_segment.jpg)
 
 这个opcode的意思是, 接下去需要调整文件的中的第2个段，就是图中segment(2)所表示的含义。
 
@@ -131,11 +131,11 @@ tags:
 
 不过有一些符号需要单独过滤，比如这个：
 
-![](Convert-iOS-App-To-Dynamic-Library/symbol_table_radr.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/symbol_table_radr.jpg)
 
 这个radr://5614542是个什么神奇的符号呢，google就能发现，念茜的twitter上提过这个奇葩的符号。(女神果然是女神, 棒~ 😂)
 
-![](Convert-iOS-App-To-Dynamic-Library/symbol_radr.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/symbol_radr.jpg)
 
 
 # 实际效果
@@ -159,7 +159,7 @@ cd app2dylib && make
 ```
 
 3.用 Xcode 新建工程，并把新生成的dylib拖进去，调整好各项设置.
-![](Convert-iOS-App-To-Dynamic-Library/xcode_setting.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/xcode_setting.jpg)
 
 Run Script里的代码(目的是为了对dylib进行签名)
 
@@ -180,7 +180,7 @@ cd ${FULL_PRODUCT_NAME}
 这个需要先确定 base64_encode 这个C函数的函数签名和在dylib中的偏移地址（我这边的9.9.3版本是0xa798e4），可以用ida分析得到。
 
 运行结果：
-![](Convert-iOS-App-To-Dynamic-Library/run_result.jpg)
+![](黑科技：把第三方-iOS-应用转成动态库/run_result.jpg)
 
 ```
 #import <UIKit/UIKit.h>
