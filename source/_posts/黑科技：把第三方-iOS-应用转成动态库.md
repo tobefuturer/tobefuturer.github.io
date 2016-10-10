@@ -127,7 +127,7 @@ tags:
 
 ### 修改符号表
 
-正常的线上应用是不存在符号表的，但是如果你之前用了我的另一个工具 [restroe-symbol](https://github.com/tobefuturer/restore-symbol) 来恢复符号表的话，这个地方自然也需要做一些处理，处理方法同rebase类似，减去0xFFFFC000.
+正常的线上应用是不存在符号表的，但是如果你之前用了我的另一个工具 [restore-symbol](https://github.com/tobefuturer/restore-symbol) 来恢复符号表的话，这个地方自然也需要做一些处理，处理方法同rebase类似，减去0xFFFFC000.
 
 不过有一些符号需要单独过滤，比如这个：
 
