@@ -174,9 +174,9 @@ cd ${FULL_PRODUCT_NAME}
 
 为方便大家尝试，这里选两个分析起来比较简单的函数调用演示给大家。
 
-一个是OC的方法 +[aluSecurity rsaEncryptText:pubKey:], 可以直接用oc运行时调用。
+一个是OC的方法 `+[aluSecurity rsaEncryptText:pubKey:]`, 可以直接用oc运行时调用。
 
-另一个是C的函数 int base64_encode(char *output, int * output_length, char * input, int input_length) 
+另一个是C的函数 `int base64_encode(char * output, int * output_length, char * input, int input_length)`
 这个需要先确定 base64_encode 这个C函数的函数签名和在dylib中的偏移地址（我这边的9.9.3版本是0xa798e4），可以用ida分析得到。
 
 运行结果：
