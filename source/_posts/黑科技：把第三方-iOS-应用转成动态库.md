@@ -194,7 +194,7 @@ cd ${FULL_PRODUCT_NAME}
 
 
 int main(int argc, char * argv[]) {
-    
+    NSLog(@"\n===Start===\n");
     NSString * dylibName = @"libAlipayApp";
     NSString * path = [[NSBundle mainBundle] pathForResource:dylibName ofType:@"dylib"];
     if (dlopen(path.UTF8String, RTLD_NOW) == NULL){
