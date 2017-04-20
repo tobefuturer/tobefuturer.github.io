@@ -1,5 +1,6 @@
 ---
 title: 黑科技：把第三方 iOS 应用转成动态库
+abbrlink: convert-iOS-app-to-dynamic-library
 date: 2016-10-08 21:51:10
 tags:
 ---

@@ -1,5 +1,6 @@
 ---
 title: iOS符号表恢复&逆向支付宝
+abbrlink: restore-symbol-of-iOS-app
 date: 2016-08-25 02:44:23
 tags:
 ---
