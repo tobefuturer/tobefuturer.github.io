@@ -19,7 +19,7 @@
                     <li>
                         <a href="<%- theme.menu[i].url ? url_for(theme.menu[i].url) : url_for(theme.menu[i]) %>">
                             <% if (theme.menu[i].icon) { %>
-                                <i class="fa fa-<%= theme.menu[i].icon %> fa-stack-2x"></i>
+                                &nbsp;<i class="fa fa-<%= theme.menu[i].icon %> fa-stack-2x"></i>
                             <% } else { %>
                                 <%= i %>
                             <% } %>
